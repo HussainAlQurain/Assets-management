@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+  <link rel="stylesheet" crossorigin="anonymous"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" >
+    
+  <script crossorigin="anonymous"
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" >
+  </script>
+    <title>Mobile list</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation.css') }}" type="text/css">
+</head>
+
+<body>
+  <ul>
+    {% if current_user.username == 'admin' %} 
+    <li><a href="dashboard">Home</a></li>
+    <li><a class="active" href="Mobiles">Mobile</a></li>
+    <li><a href="Computers">Computers</a></li>
+    <!--<li><a href="Engineering Licenses">Engineering Licenses</a></li>-->
+    <li><a href="ComputerStorage">Computer Storage</a></li>
+    <li><a href="PrinterStorage">Printer Storage</a></li>
+    <li><a href="Inventory">Inventory</a></li>
+
+    <span class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        externals
+      </button>
+      <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="travelports">Travel Ports</a>
+        <a class="dropdown-item" href="externalhd">External HD</a>
+        <a class="dropdown-item" href="bags">Bags</a>
+      </span>
+    </span>
+    <!--
+    <li><a href="Toners">Toners</a></li>
+    <li><a href="PurchasedToners">Purchased Toners</a></li>
+    <li><a href="TonerApproval">Toner Approval {%if info.tonersCount != 0 %}<span id="notif">{{info.tonersCount}}</span> {% else %}{% endif %}</a></li>-->
+    <li><a href="searchby">Search</a></li>
+    <li style="background-color:rgb(6, 66, 90) ;"><a href="{{url_for('logout')}}">Log out</a></li>
+    <li><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by u name, m model.." title="Type in u name, m model"></li>
+      
+  {% else %}
+  <li><a href="dashboard">Home</a></li>
+    <li><a href="Toners">Toners</a></li>
+    <li><a href="PurchasedToners">PurchasedToners</a></li>
+    <li><a href="TonerApproval">Toner Approval {%if info.tonersCount != 0 %}<span id="notif">{{info.tonersCount}}</span> {% else %}{% endif %}</a></li>
+    <li><a href="searchby">Search</a></li>
+    <li style="background-color:rgb(6, 66, 90) ;"><a href="{{url_for('logout')}}">Log out</a></li>
+    <li><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by u name, m model.." title="Type in u name, m model"></li>
+      
+  {% endif %} 
+    
+    
+  </ul>
+  
+  <table class="table" id="myTable">
+    <thead>
+        <tr>
+        <th scope="col">Employee ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Model</th>
+        <th scope="col">Color</th>
+        <th scope="col">SN/IMEI/MEID</th>
+        <th scope="col">Previous Users</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for mobile in mobiles %}
+            <tr>
+                <td>{{ mobile.empID }}</th>
+                <td>{{ mobile.name }}</td>
+                <td>{{ mobile.model }}</td>
+                <td>{{ mobile.color }}</td>
+                <td>{{ mobile.serial_id }}</td>
+                <td>{{ mobile.history }}</td>
+                <td><a href='updatemobile/{{ mobile.id }}'>Edit</a></td>
+                <td><a href='returnmobile/{{ mobile.id }}'>Return</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+  <a href='addmobile'>
+    <button style="display:block; width: 100%; position: fixed; bottom: 0px; background-color:#FFCF66; font-weight: bolder;">Add Mobile</button>
+  </a>
+
+
+
+  
+  <script>
+    function myFunction() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      searchby = filter.toString().split(" ");
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+      indx = 0;
+      if(searchby[0] == 'USER' || searchby[0] == 'U'){
+        indx = 1;
+      } else if (searchby[0] == 'MODEL' || searchby[0] == 'M'){
+        indx = 2;
+      } else if (searchby[0] == 'ID' || searchby[0] == 'I'){
+        indx = 0;
+      }
+      searchby.shift();
+      searchval = searchby.join(" ")
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[indx];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(searchval) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }       
+      }
+    }
+    </script>
+    <script type="text/javascript">
+      var table = document.getElementById("myTable");
+      var rows = document.getElementsByTagName("tr");
+       for(i = 1; i < rows.length; i++) {
+      var currentRow = table.rows[i];
+       currentRow.onclick = function() {
+      // Array.from(this.parentElement.children).forEach(function(el){
+      // el.classList.remove('selected-row');
+    
+      [...this.parentElement.children].forEach((el) => el.classList.remove('selected-row'));
+       this.classList.add('selected-row');
+       }};
+      // using spread operator
+      </script>
+</body>

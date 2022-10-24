@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+  <link rel="stylesheet" crossorigin="anonymous"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" >
+    
+  <script crossorigin="anonymous"
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" >
+  </script>
+    <title>Mobile list</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation.css') }}" type="text/css">
+</head>
+
+<body>
+  <ul>
+    <li><a  href="Mobiles">Mobile</a></li>
+    <li><a href="Computers">Computers</a></li>
+    <li><a href="Engineering Licenses">Engineering Licenses</a></li>
+    <li><a href="Computer Storage">Computer Storage</a></li>
+    <li><a href="Printer Storage">Printer Storage</a></li>
+    <li><a href="Inventory">Inventory</a></li>
+    <li><a class="active" href="searchby">Search</a></li>
+    <li><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by u name, d dpt.." title="Type in u user name. OR d department name"></li>
+  </ul>
+  <table class="table" id="myTable">
+    <thead>
+        <tr>
+            <td>
+              {{assets[0].uname}}
+            </td>
+          
+        </tr>
+    </thead>
+    <tbody>
+      <span class="span1">
+      <tr style="font-weight: bolder;"><td>Computers</td></tr>
+      <tr>
+        <th scope="col">Office</th>
+        <th scope="col">Department</th>
+        <th scope="col">Computer Name</th>
+        <th scope="col">Comouter brand</th>
+        <th scope="col">Computer Model No.</th>
+        <th scope="col">service tag / Serial no.</th>
+        <th scope="col">OS</th>
+        <th scope="col">CPUs</th>
+        <th scope="col">RAM</th>
+        <th scope="col">HD Size</th>
+        <th scope="col">HD Type</th>
+        <th scope="col">Office</th>
+        <th scope="col">Adobe Pro</th>
+        <th scope="col">Microsoft Projects</th>
+        <th scope="col">Visio</th>
+        <th scope="col">Brand</th>
+        <th scope="col">Size</th>
+        <th scope="col">travel port DS</th>
+        <th scope="col">External HD</th>
+        <th scope="col">Bag</th>
+        </tr>
+        {% for asset in assets %}
+            <tr>
+                <td>{{ asset.Office }}</td>
+                <td>{{ asset.Department }}</td>
+                <td>{{ asset["Computer name"]}}</td>
+                <td>{{ asset["Computer Brand"] }}</td>
+                <td>{{ asset["Computer Model No"] }}</td>
+                <td>{{ asset["Service tag / Serial No"] }}</td>
+                <td>{{ asset["OS"] }}</td>
+                <td>{{ asset["CPUs"] }}</td>
+                <td>{{ asset["Ram"] }}</td>
+                <td>{{ asset["HD Size"] }}</td>
+                <td>{{ asset["HD Type"] }}</td>
+                <td>{{ asset["Office365"] }}</td>
+                <td>{{ asset["Adobe Pro"] }}</td>
+                <td>{{ asset["Microsoft Projects"] }}</td>
+                <td>{{ asset["Visio"] }}</td>
+                <td>{{ asset["Brand"] }}</td>
+                <td>{{ asset["Size"] }}</td>
+                <td>{{ asset["Travel port DS"] }}</td>
+                <td>{{ asset["External HD"] }}</td>
+                <td>{{ asset["Bag"] }}</td>
+                <td class ='hideme'><p>Previous Users: </p>{{ asset["History"] }}</td>
+
+            </tr>
+        {% endfor %}
+      </span>
+      <span class="span2">
+        <tr style="font-weight: bolder;"><td>Mobiles</td></tr>
+        <tr>
+          <th scope="col">Model</th>
+          <th scope="col">Color</th>
+        </tr>
+        {% for asset in assets %}
+            <tr>
+                <td>{{ asset.model }}</td>
+                <td>{{ asset.color }}</td>
+            </tr>
+        {% endfor %}
+      </span>
+      <span class="span3">
+        <tr style="font-weight: bolder;"><td>Assets</td></tr>
+        <tr>
+          <th scope="col">Asset</th>
+          <th scope="col">Description</th>
+          <th scope="col">quantity</th>
+        </tr>
+        {% for asset in assets %}
+            <tr>
+                <td>{{ asset.asset }}</td>
+                <td>{{ asset.description }}</td>
+                <td>{{ asset.quantity }}</td>
+            </tr>
+        {% endfor %}
+      </span>
+      <span class="span4">
+        <tr style="font-weight: bolder;"><td>Travelports, hd, bags</td></tr>
+        <tr>
+          <th scope="col">Travelports</th>
+          <th scope="col">External HD</th>
+          <th scope="col">Bags</th>
+        </tr>
+        {% for asset in assets %}
+            <tr>
+              <td>{{ asset["Travel port DS"] }}</td>
+              <td>{{ asset["External HD"] }}</td>
+              <td>{{ asset["Bag"] }}</td>
+            </tr>
+        {% endfor %}
+
+      </span>
+    </tbody>
+  </table>
+
+  <script>
+    const s1 = document.getElementsByClassName("span1");
+    const s2 = document.getElementsByClassName("span2");
+    const s3 = document.getElementsByClassName("span3");
+    const s4 = document.getElementsByClassName("span4");
+  </script>
+</body>

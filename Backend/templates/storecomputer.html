@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+    <title>Mobile Details</title>
+    
+    <link rel="stylesheet" crossorigin="anonymous"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" >
+    
+	<script crossorigin="anonymous"
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" >
+	</script>
+
+
+<style>
+    label {
+        font-family: "Lucida Console", "Courier New", monospace;
+        font-weight: bold;
+    }
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/updates.css') }}" type="text/css">
+</head>
+
+<body>
+    <h2>Computer Details</h2>
+
+    <form action="" method = "POST">
+        <div class="form-group row">
+            <label for="id">Storage location / Note</label>
+            <input type="text" class="form-control" name="note" id="note" value="{{computer.History}}">
+          </div>
+          <div class="form-group row" style="display: none;">
+            <label for="id">Employee ID</label>
+            <input type="text" class="form-control" name="empID" id="empID" value="{{computer.empID}}">
+          </div>
+        <div class="form-group row" style="display: none;">
+          <label for="id">Office</label>
+          <input type="text" class="form-control" name="Office" id="Office" value="{{computer.Office}}">
+        </div>
+        <div class="form-group row" style="display: none;">
+            <label for="name">Department</label>
+            <input type="text" class="form-control" name="Department" id="Department" value="{{computer.Department}}">
+        </div>
+        <div class="form-group row" style="display: none;">
+            <label for="year">User</label>
+            <input type="text" class="form-control" name="User" id="User" value="{{computer.User}}">
+        </div>
+        <div class="form-group row" style="display: none;">
+            <label for="price">Computer name</label>
+            <input type="text" class="form-control" name="Computer name" id="Computer name" value="{{computer['Computer name']}}">
+        </div>
+
+          <div class="form-group row" style="display: none;">
+            <label for="id">Computer Brand</label>
+            <input type="text" class="form-control" name="Computer Brand" id="Computer Brand" value="{{ computer['Computer Brand'] }}">
+          </div>
+          <div class="form-group row" style="display: none;">
+              <label for="name">Computer Model No</label>
+              <input type="text" class="form-control" name="Computer Model No" id="Computer Model No" value="{{computer['Computer Model No']}}">
+          </div>
+          <div class="form-group row" style="display: none;">
+              <label for="year">Service tag / Serial No</label>
+              <input type="text" class="form-control" name="Service tag / Serial No" id="Service tag / Serial No" value="{{ computer['Service tag / Serial No'] }}">
+          </div>
+          <div class="form-group row" style="display: none;">
+              <label for="price">OS</label>
+              <input type="text" class="form-control" name="OS" id="OS" value="{{computer.OS}}">
+          </div>
+
+          <div class="form-group row" style="display: none;">
+            <label for="id">CPUs</label>
+            <input type="text" class="form-control" name="CPUs" id="CPUs" value="{{computer.CPUs}}">
+          </div>
+          <div class="form-group row" style="display: none;">
+              <label for="name">Ram</label>
+              <input type="text" class="form-control" name="Ram" id="Ram" value="{{computer.Ram}}">
+          </div>
+          <div class="form-group row" style="display: none;">
+              <label for="year">HD Size</label>
+              <input type="text" class="form-control" name="HD Size" id="HD Size" value="{{computer['HD Size']}}">
+          </div>
+          <div class="form-group row" style="display: none;">
+              <label for="price">HD Type</label>
+              <input type="text" class="form-control" name="HD Type" id="HD Type" value="{{ computer['HD Type'] }}">
+          </div>
+
+          <div class="form-group row" style="display: none;">
+            <label for="id">Office</label>
+            <input type="text" class="form-control" name="Office365" id="Office365" value="{{computer.Office365}}">
+          </div>
+          <div class="form-group row" style="display: none;">
+              <label for="name">Adobe Pro</label>
+              <input type="text" class="form-control" name="Adobe Pro" id="Adobe Pro" value="{{computer['Adobe Pro']}}">
+          </div>
+          <div class="form-group row" style="display: none;">
+              <label for="year">Microsoft Projects</label>
+              <input type="text" class="form-control" name="Microsoft Projects" id="Microsoft Projects" value="{{computer['Microsoft Projects']}}">
+          </div>
+          <div class="form-group row" style="display: none;">
+              <label for="price">Visio</label>
+              <input type="text" class="form-control" name="Visio" id="Visio" value="{{ computer['Visio'] }}">
+          </div>
+
+          <div class="form-group row" style="display: none;">
+            <label for="id">Brand</label>
+            <input type="text" class="form-control" name="Brand" id="Brand" value="{{computer.Brand}}">
+          </div>
+          <div class="form-group row" style="display: none;">
+              <label for="name">Size</label>
+              <input type="text" class="form-control" name="Size" id="Size" value="{{computer.Size}}">
+          </div>
+          <div class="form-group row" style="display: none;">
+              <label for="year">Travel port DS</label>
+              <input type="text" class="form-control" name="Travel port DS" id="Travel port DS" value="{{computer['Travel port DS']}}">
+          </div>
+          <div class="form-group row" style="display: none;">
+              <label for="price">External HD</label>
+              <input type="text" class="form-control" name="External HD" id="External HD" value="{{ computer['External HD'] }}">
+          </div>
+
+          <div class="form-group row" style="display: none;">
+            <label for="price">Bag</label>
+            <input type="text" class="form-control" name="Bag" id="Bag" value="{{ computer['Bag'] }}">
+        </div>
+
+        <div class="form-group row" style="display: none;">
+            <label for="price">History</label>
+            <input type="text" class="form-control" name="History" id="History" value="{{ computer['History'] }}">
+        </div>
+        
+
+        <button type="btnAdd" class="btn btn-primary">Submit</button>
+        <a href="/Computers" class="btn btn-primary">Cancel</a>
+      </form>
+</body>

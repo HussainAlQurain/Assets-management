@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+  <link rel="stylesheet" crossorigin="anonymous"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" >
+    
+  <script crossorigin="anonymous"
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" >
+  </script>
+    <title>Computer Storage</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation.css') }}" type="text/css">
+</head>
+
+<body>
+<script>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for msg in messages %}
+      alert("{{msg}}")
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+</script>
+
+
+  <ul>
+    {% if current_user.username == 'admin' %} 
+    <li><a href="Mobiles">Mobile</a></li>
+    <li><a href="Computers">Computers</a></li>
+    <!--<li><a href="Engineering Licenses">Engineering Licenses</a></li>-->
+    <li><a class="active" href="ComputerStorage">Computer Storage</a></li>
+    <li><a href="PrinterStorage">Printer Storage</a></li>
+    <li><a href="Inventory">Inventory</a></li>
+
+
+    
+    <span class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        externals
+      </button>
+      <span class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="travelports">Travel Ports</a>
+        <a class="dropdown-item" href="externalhd">External HD</a>
+        <a class="dropdown-item" href="bags">Bags</a>
+      </span>
+    </span>
+    <!--
+    <li><a href="Toners">Toners</a></li>
+    <li><a href="PurchasedToners">Purchased Toners</a></li>
+    <li><a href="TonerApproval">Toner Approval {%if info.tonersCount != 0 %}<span id="notif">{{info.tonersCount}}</span> {% else %}{% endif %}</a></li>-->
+    <li><a href="searchby">Search</a></li>
+    <li style="background-color:rgb(6, 66, 90) ;"><a href="{{url_for('logout')}}">Log out</a></li>
+    <li><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by u name, m model.." title="Type in u name, m model"></li>
+      
+  {% else %}
+    <li><a href="Toners">Toners</a></li>
+    <li><a href="PurchasedToners">PurchasedToners</a></li>
+    <li><a href="TonerApproval">Toner Approval {%if info.tonersCount != 0 %}<span id="notif">{{info.tonersCount}}</span> {% else %}{% endif %}</a></li>
+    <li><a href="searchby">Search</a></li>
+    <li style="background-color:rgb(6, 66, 90) ;"><a href="{{url_for('logout')}}">Log out</a></li>
+    <li><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by u name, m model.." title="Type in u name, m model"></li>
+      
+  {% endif %} 
+    
+    
+  </ul>
+  <table class="table" id="myTable">
+    <thead>
+        <tr>
+        <th scope="col">Note</th>
+        <th scope="col">Office</th>
+        <th scope="col">Department</th>
+        <th scope="col" style="display:none;">Employee ID</th>
+        <th scope="col">User</th>
+        <th scope="col">Computer Name</th>
+        <th scope="col">Computer Brand</th>
+        <th scope="col">Computer Model No.</th>
+        <th scope="col">Service tag / Serial no.</th>
+        <th scope="col">OS</th>
+        <th scope="col">CPUs</th>
+        <th scope="col">RAM</th>
+        <th scope="col">HD Size</th>
+        <th scope="col">HD Type</th>
+        <th scope="col">Office</th>
+        <th scope="col">Adobe Pro</th>
+        <th scope="col">Microsoft Projects</th>
+        <th scope="col">Visio</th>
+        <th scope="col">Brand</th>
+        <th scope="col">Size</th>
+        <th scope="col">travel port DS</th>
+        <th scope="col">External HD</th>
+        <th scope="col">Bag</th>
+        <th scope="col">Previous users</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for computer in computers %}
+            <tr>
+                <td>{{ computer.note }}</td>
+                <td>{{ computer.Office }}</td>
+                <td>{{ computer.Department }}</td>
+                <td style="display:none;">{{ computer.empID }}</td>
+                <td>{{ computer.User }}</td>
+                <!--class = 'showme'-->
+                <td>{{ computer["Computer name"]}}</td>
+                <td>{{ computer["Computer Brand"] }}</td>
+                <td>{{ computer["Computer Model No"] }}</td>
+                <td>{{ computer["Service tag / Serial No"] }}</td>
+                <td>{{ computer["OS"] }}</td>
+                <td>{{ computer["CPUs"] }}</td>
+                <td>{{ computer["Ram"] }}</td>
+                <td>{{ computer["HD Size"] }}</td>
+                <td>{{ computer["HD Type"] }}</td>
+                <td>{{ computer["Office365"] }}</td>
+                <td>{{ computer["Adobe Pro"] }}</td>
+                <td>{{ computer["Microsoft Projects"] }}</td>
+                <td>{{ computer["Visio"] }}</td>
+                <td>{{ computer["Brand"] }}</td>
+                <td>{{ computer["Size"] }}</td>
+                <td>{{ computer["Travel port DS"] }}</td>
+                <td>{{ computer["External HD"] }}</td>
+                <td>{{ computer["Bag"] }}</td>
+                <td>{{ computer["History"] }}</td>
+                    <!--class ='hideme'-->
+                <td><a href='updatecomputerstorage/{{ computer.id }}'>Edit</a></td>
+                <td><a href='assigncomputer/{{ computer.id }}'>Assign</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+  <a href='addcomputerstorage'>
+    <button style="display:block; width: 100%; position: fixed; bottom: 0px; background-color:#FFCF66; font-weight: bolder;">Add Computer</button>
+  </a>
+
+
+  <script>
+    function myFunction() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      searchby = filter.toString().split(" ");
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+      indx = 0;
+      if(searchby[0] == 'USER' || searchby[0] == 'U'){
+        indx = 4;
+      } else if (searchby[0] == 'DEPARTMENT' || searchby[0] == 'D'){
+        indx = 2;
+      } else if (searchby[0] == 'COMPUTERBRAND' || searchby[0] == 'CB'){
+        indx = 6;
+      }else if (searchby[0] == 'ID' || searchby[0] == 'I'){
+        indx = 3;
+      }
+      else if (searchby[0] == 'COMPUTERMODEL' || searchby[0] == 'CM'){
+        indx = 7;
+      }
+      else if (searchby[0] == 'SERIALNUMBER' || searchby[0] == 'SN'){
+        indx = 8;
+      }
+      searchby.shift();
+      searchval = searchby.join(" ")
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[indx];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(searchval) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }       
+      }
+    }
+    </script>
+    <script type="text/javascript">
+  var table = document.getElementById("myTable");
+  var rows = document.getElementsByTagName("tr");
+   for(i = 1; i < rows.length; i++) {
+  var currentRow = table.rows[i];
+   currentRow.onclick = function() {
+  // Array.from(this.parentElement.children).forEach(function(el){
+  // el.classList.remove('selected-row');
+
+  [...this.parentElement.children].forEach((el) => el.classList.remove('selected-row'));
+   this.classList.add('selected-row');
+   }};
+  // using spread operator
+  </script>
+  <script>
+    const rows2 = document.querySelectorAll('td');
+    rows2.forEach((row) => {
+  if (row.innerHTML === 'Riyadh') {
+    const parent = row.parentNode;
+    parent.style.backgroundColor = '#ed8866';
+  }
+});
+  </script>
+</body>

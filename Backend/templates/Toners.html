@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+  <link rel="stylesheet" crossorigin="anonymous"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" >
+    
+  <script crossorigin="anonymous"
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" >
+  </script>
+    <title>Inventory list</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/navigation.css') }}" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  
+
+
+  <style>
+  thead tr th{
+  max-width: 180px !important;
+  white-space: normal !important;
+  /*if you want 1 line change white-space to nowrap and remove max-width*/
+  overflow:hidden;
+}
+tbody tr td {
+  vertical-align: middle;
+  max-width: 180px;
+  height: 55px;
+  white-space: normal;
+  /*if you want 1 line change white-space to nowrap and remove max-width*/
+  overflow:hidden;
+}
+  </style>
+</head>
+
+<body>
+  <ul>
+    {% if current_user.username == 'admin' %} 
+    <!--
+    <li><a href="Mobiles">Mobile</a></li>
+    <li><a href="Computers">Computers</a></li>
+    <li><a href="Engineering Licenses">Engineering Licenses</a></li>
+    <li><a href="ComputerStorage">Computer Storage</a></li>
+    <li><a href="PrinterStorage">Printer Storage</a></li>
+    <li><a href="Inventory">Inventory</a></li>
+    -->
+    <li><a class="active" href="Toners">Toners</a></li>
+    <li><a href="PurchasedToners">Purchased Toners</a></li>
+    <li><a href="TonerApproval">Toner Approval {%if info.tonersCount != 0 %}<span id="notif">{{info.tonersCount}}</span> {% else %}{% endif %}</a></li>
+    <li><a href="searchby">Search</a></li>
+    <li><a href="searchtoners">Search Toners</a></li>
+    <li style="background-color:rgb(6, 66, 90) ;"><a href="{{url_for('logout')}}">Log out</a></li>
+    <li><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by u name, m model.." title="Type in u name, m model"></li>
+      
+  {% else %}
+    <li><a class="active" href="Toners">Toners</a></li>
+    <li><a href="PurchasedToners">PurchasedToners</a></li>
+    <li><a href="TonerApproval">Toner Approval {%if info.tonersCount != 0 %}<span id="notif">{{info.tonersCount}}</span> {% else %}{% endif %}</a></li>
+    <li><a href="searchby">Search</a></li>
+    <li><a href="searchtoners">Search Toners</a></li>
+    <li style="background-color:rgb(6, 66, 90) ;"><a href="{{url_for('logout')}}">Log out</a></li>
+    <li><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by u name, m model.." title="Type in u name, m model"></li>
+      
+  {% endif %} 
+    
+    
+  </ul>
+  <table class="table" id="myTable">
+    <thead>
+        <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Printer</th>
+        <th scope="col">Toner</th>
+        <th scope="col">Toner NO.</th>
+        <th scope="col">Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for toner in toners %}
+            <tr>
+                <td style="font-weight:bolder ; vertical-align: middle;">{{ toner.emp }}</th>
+                <td style="font-weight:bolder ; vertical-align: middle;">{{ toner.printername }}</th>
+                <td>{{ toner.tonername }}</td>
+                <td>{{ toner.tonerid }}</td>
+                <td>{{ toner.quantity }}</td>
+                {% if current_user.username == 'admin' %} 
+                <td><a href='updatetoners/{{ toner.id }}'>Newly purchased toners</a></td>
+                <td><a href='spenttoners/{{ toner.id }}'>Employee requests</a></td>
+                {% else %}
+                <td><a href='spenttoners/{{ toner.id }}'>Request for Employee</a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+  <a href='addprinter'>
+    <button style="display:block; width: 100%; position: fixed; bottom: 0px; background-color:#FFCF66; font-weight: bolder;">Add Printer</button>
+  </a>
+
+
+
+  
+  <script>
+    function myFunction() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      searchby = filter.toString().split(" ");
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+      indx = 0;
+      if(searchby[0] == 'TONER' || searchby[0] == 'T'){
+        indx = 3;
+      } else if (searchby[0] == 'PRINTER' || searchby[0] == 'P'){
+        indx = 1;
+      } else if (searchby[0] == 'NAME' || searchby[0] == 'N'){
+        indx = 0;
+      }
+      searchby.shift();
+      searchval = searchby.join(" ")
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[indx];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(searchval) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }       
+      }
+    }
+    </script>
+
+<script type="text/javascript">
+  var table = document.getElementById("myTable");
+  var rows = document.getElementsByTagName("tr");
+   for(i = 1; i < rows.length; i++) {
+  var currentRow = table.rows[i];
+   currentRow.onclick = function() {
+  // Array.from(this.parentElement.children).forEach(function(el){
+  // el.classList.remove('selected-row');
+
+  [...this.parentElement.children].forEach((el) => el.classList.remove('selected-row'));
+   this.classList.add('selected-row');
+   }};
+  // using spread operator
+  </script>
+
+<script>
+  function spanRow(column) {
+      var categoryColumn = $("table tr td:nth-child(" + column +")");
+      var rowspan = 1;
+      var lastElement = categoryColumn.first();
+      categoryColumn.each(function () {
+          var element = $(this);
+          if ($.trim(element.html()) == '') {
+              element.remove();
+              rowspan++;
+          } else {
+              lastElement.attr("rowspan", rowspan);
+              lastElement = element;
+              rowspan = 1;
+          }
+      });
+      lastElement.attr("rowspan", rowspan);
+  }
+  spanRow(2);
+  spanRow(1);
+  </script>
+    <script>
+      const rows2 = document.querySelectorAll('td');
+      rows2.forEach((row) => {
+    if (row.innerHTML.includes('Unused')) {
+      const parent = row.parentNode;
+      parent.style.backgroundColor = '#ed8866';
+    }
+  });
+    </script>
+
+
+</body>
