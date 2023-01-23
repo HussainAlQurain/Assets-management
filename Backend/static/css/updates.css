@@ -1,0 +1,13 @@
+form button {
+    margin-top: 2%;
+    margin-left: 45%;
+    display: block;
+    float: left;
+    margin-right: 2%;
+}
+form a {
+    margin-top: 2%;
+    display: block;
+    float: left;
+}
+

@@ -1,0 +1,4 @@
+.env
+/email/.env
+/email/key.key
+/Backend/mobiles\ backup.py

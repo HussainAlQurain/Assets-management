@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+    <title>Mobile Details</title>
+    
+    <link rel="stylesheet" crossorigin="anonymous"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" >
+    
+	<script crossorigin="anonymous"
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" >
+	</script>
+
+<style>
+    label {
+        font-family: "Lucida Console", "Courier New", monospace;
+        font-weight: bold;
+    }
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/updates.css') }}" type="text/css">
+</head>
+
+<body>
+    <h2>Mobile Details</h2>
+
+    <form action="" method = "POST">
+        <div class="form-group row">
+          <label for="id">Employee Id</label>
+          <input type="text" class="form-control" name="empID" id="empID" value="{{mobile.empID}}">
+        </div>
+        <div class="form-group row">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" name="name" id="name" value="{{mobile.name}}">
+        </div>
+        <div class="form-group row">
+            <label for="year">Model</label>
+            <input type="text" class="form-control" name="model" id="year" value="{{mobile.model}}">
+        </div>
+        <div class="form-group row">
+            <label for="price">Color</label>
+            <input type="text" class="form-control" name="color" id="price" value="{{mobile.color}}">
+        </div>
+        <div class="form-group row">
+            <label for="price">SN/IMEI/MEID</label>
+            <input type="text" class="form-control" name="serial_id" id="serial_id" value="{{mobile.serial_id}}">
+        </div>
+        <div class="form-group row" style="display:none ;">
+            <label for="price">Previous Users</label>
+            <input type="text" class="form-control" name="history" id="history" value="{{mobile.history}}">
+        </div>
+        <button type="btnAdd" class="btn btn-primary">Submit</button>
+        <a href="/" class="btn btn-primary">Cancel</a>
+      </form>
+</body>
